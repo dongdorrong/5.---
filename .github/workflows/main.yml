@@ -12,8 +12,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Set env
-        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/v}" >> $GITHUB_ENV
+      # - name: Set env
+      #   run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/v}" >> $GITHUB_ENV
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       - name: Login to Github Container Registry
@@ -27,9 +27,8 @@ jobs:
         id: docker_build_a
         with:
           context: .
-          file: ./project01/resources/container/Dockerfile
+          file: ./project01/resources/container/service_a/Dockerfile
           push: true
-          build-args: DONGDORRONG_VAR "SERVICE_A"
           tags: |
             ghcr.io/${{ github.repository_owner }}/project01/service_a:latest
       - name: Build and push (B)
@@ -37,9 +36,8 @@ jobs:
         id: docker_build_b
         with:
           context: .
-          file: ./project01/resources/container/Dockerfile
+          file: ./project01/resources/container/service_b/Dockerfile
           push: true
-          build-args: DONGDORRONG_VAR "SERVICE_B"
           tags: |
             ghcr.io/${{ github.repository_owner }}/project01/service_b:latest
       - name: Build and push (C)
@@ -47,8 +45,7 @@ jobs:
         id: docker_build_c
         with:
           context: .
-          file: ./project01/resources/container/Dockerfile
+          file: ./project01/resources/container/service_c/Dockerfile
           push: true
-          build-args: DONGDORRONG_VAR "SERVICE_C"
           tags: |
             ghcr.io/${{ github.repository_owner }}/project01/service_c:latest
